@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Jigsaw Config 4
   m_EditorClassIdentifier: 
   _image: {fileID: 21300000, guid: 0512f9b9e00b24845a023d1bc5a97e67, type: 3}
-  _size: {x: 6, y: 6}
+  _size: {x: 2, y: 2}
