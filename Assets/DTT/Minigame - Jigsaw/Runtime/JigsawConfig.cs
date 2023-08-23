@@ -11,12 +11,28 @@ namespace DTT.MiniGame.Jigsaw
         /// <summary>
         /// The image that will be on the jigsaw pieces.
         /// </summary>
-        public Sprite Image => _image;
+        public Sprite Image
+        {
+            get
+            { return _image;
+            }
+            set
+            {
+                _image = value;
+            }
+        }
 
         /// <summary>
         /// The size of the puzzle.
         /// </summary>
-        public Vector2Int Size => _size;
+        public Vector2Int Size
+        {
+            get { return _size; }
+            set
+            {
+                _size = value;
+            }
+        }
 
         [SerializeField]
         [Tooltip("The image that will be on the jigsaw pieces.")]

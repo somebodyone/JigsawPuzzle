@@ -1,9 +1,9 @@
 {
-    "name": "DTT.Minigame-Jigsaw.Runtime",
+    "name": "Main",
     "rootNamespace": "",
     "references": [
-        "GUID:40110409d6f32d94c8a49de52995a651",
-        "GUID:1711cb30f577ba1498364a78a6873853"
+        "GUID:6486392a23a55864cb12b1b0749f52e9",
+        "GUID:e11c269a01baa3a4081bda4ef1f0b75b"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

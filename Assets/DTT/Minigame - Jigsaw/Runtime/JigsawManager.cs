@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Diagnostics;
+using DLAM;
 using DTT.MiniGame.Jigsaw.UI;
 using DTT.MinigameBase;
 using DTT.MinigameBase.UI;
@@ -105,7 +106,8 @@ namespace DTT.MiniGame.Jigsaw
         /// <param name="config">The config the start game with.</param>
         public void StartGame(JigsawConfig config)
         {
-            _currentConfig = config;
+            //_currentConfig = config;
+            _currentConfig = DataMgr.GetCurLevelData();
             _isGameActive = true;
             _isPaused = false;
 
