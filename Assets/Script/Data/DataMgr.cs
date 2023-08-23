@@ -34,6 +34,11 @@ namespace DLAM
 
         public static void SetCurLevelData(Vector2Int size,string imgName)
         {
+            if (CurLevelData == null)
+            {
+                CurLevelData =  ScriptableObject.CreateInstance<JigsawConfig>();
+            }
+            
             CurLevelData.Size = size;
 
             CurLevelData.Image = Resources.Load<Sprite>(imgName);
