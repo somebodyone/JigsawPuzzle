@@ -115,11 +115,11 @@ namespace DTT.MiniGame.Jigsaw
             _misplacedPiecesCounter = 0;
             _boardUI.CleanBoard();
 
-            _board.Initialize(config);
+            _board.Initialize(_currentConfig);
             _boardUI.CreateBoard(_board);
 
             _timer.Start();
-            Started.Invoke();
+            //Started.Invoke();
         }
 
         /// <summary>

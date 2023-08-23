@@ -1,6 +1,7 @@
 ﻿using System;
 using DTT.Tweening;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace DTT.MinigameBase.UI
@@ -99,7 +100,11 @@ namespace DTT.MinigameBase.UI
         /// <summary>
         /// Called when the home button is pressed.
         /// </summary>
-        private void OnHomeButtonClicked() => HomeButtonPressed?.Invoke();
+        private void OnHomeButtonClicked()
+        {
+            AsyncOperation async = SceneManager.LoadSceneAsync("MainScene");
+            //HomeButtonPressed?.Invoke();
+        }
 
         /// <summary>
         /// Sets the title for the paused state.
@@ -148,9 +153,9 @@ namespace DTT.MinigameBase.UI
 
             _canvasGroup.interactable = state;
             _canvasGroup.blocksRaycasts = state;
-            
-            DTTween.Value(_canvasGroup.alpha, state ? 1f : 0f, 0.6f, Easing.EASE_IN_OUT_SINE,
-                alpha => _canvasGroup.alpha = alpha);
+
+            _canvasGroup.alpha = state ? 1f : 0f;
+
         }
     }
 }
