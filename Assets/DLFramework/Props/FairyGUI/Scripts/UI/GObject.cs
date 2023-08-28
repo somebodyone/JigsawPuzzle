@@ -80,7 +80,7 @@ namespace FairyGUI
         /// <summary>
         /// Lowlevel display object.
         /// </summary>
-        public DisplayObject displayObject { get; protected set; }
+        public DisplayObject displayObject { get; set; }
 
         /// <summary>
         /// 当前全局正在被拖动的对象

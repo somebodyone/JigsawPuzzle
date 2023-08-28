@@ -41,7 +41,7 @@ namespace DTT.MiniGame.Jigsaw.Demo
         /// </summary>
         private void OnEnable()
         {
-            _button.onClick.AddListener(OnClick);
+            // _button.onClick.AddListener(OnClick);
             _miniGame.Finish += OnFinish;
             _miniGame.Started += OnStart;
         }
@@ -51,7 +51,7 @@ namespace DTT.MiniGame.Jigsaw.Demo
         /// </summary>
         private void OnDisable()
         {
-            _button.onClick.RemoveListener(OnClick);
+            // _button.onClick.RemoveListener(OnClick);
             _miniGame.Finish -= OnFinish;
             _miniGame.Started -= OnStart;
         }
@@ -59,7 +59,7 @@ namespace DTT.MiniGame.Jigsaw.Demo
         /// <summary>
         /// Called when the button is clicked.
         /// </summary>
-        private void OnClick() => _miniGame.StartGame();
+        // private void OnClick() => _miniGame.StartGame();
 
         /// <summary>
         /// Called when the game has started.

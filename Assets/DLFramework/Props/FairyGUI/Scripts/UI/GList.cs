@@ -28,7 +28,7 @@ namespace FairyGUI
         /// Resource url of the default item.
         /// </summary>
         public string defaultItem;
-
+        public string specialItem = "";
         /// <summary>
         /// 如果true，当item不可见时自动折叠，否则依然占位
         /// </summary>
@@ -326,6 +326,17 @@ namespace FairyGUI
         /// <param name="url"></param>
         /// <returns></returns>
         public GObject GetFromPool(string url)
+        {
+            if (string.IsNullOrEmpty(url))
+                url = defaultItem;
+
+            GObject ret = _pool.GetObject(url);
+            if (ret != null)
+                ret.visible = true;
+            return ret;
+        }
+        
+        public GObject GetFromPool(string url,int index)
         {
             if (string.IsNullOrEmpty(url))
                 url = defaultItem;
@@ -1563,7 +1574,10 @@ namespace FairyGUI
                     if (itemRenderer != null)
                     {
                         for (int i = 0; i < value; i++)
+                        {
                             itemRenderer(i, GetChildAt(i));
+                        }
+                            
                     }
                 }
             }

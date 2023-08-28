@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/DTT/Minigame - Jigsaw/Demo/Scenes/DemoScene.unity
+    path: Assets/Scenes/DemoScene.unity
     guid: bc5033dccb0b4ac43a39b6ba65cff850
   - enabled: 1
     path: Assets/DTT/Minigame Base/Assets/Scenes/DTT Level Select.unity

@@ -28,7 +28,6 @@ namespace DLBASE
                 mask.width = Screen.width;
                 GRoot.inst.AddChild(mask);
             }
-            InitData();
             InitCompent();
             InitAddlistioner();
         }
@@ -43,7 +42,7 @@ namespace DLBASE
             
         }
 
-        protected virtual void InitData()
+        public virtual void InitData(params object[] args)
         {
             
         }

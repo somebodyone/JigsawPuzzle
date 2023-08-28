@@ -455,7 +455,9 @@ namespace FairyGUI
         public GObject GetChildAt(int index)
         {
             if (index >= 0 && index < numChildren)
+            {
                 return _children[index];
+            }
             else
                 throw new Exception("Invalid child index: " + index + ">" + numChildren);
         }

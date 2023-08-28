@@ -19,6 +19,11 @@ namespace DTT.MiniGame.Jigsaw
         /// </summary>
         public event Action<JigsawResult> Finish;
 
+        public void StartGame(JigsawConfig config)
+        {
+            
+        }
+
         /// <summary>
         /// The action that will be fired when the game has started.
         /// </summary>
@@ -98,19 +103,28 @@ namespace DTT.MiniGame.Jigsaw
         /// <summary>
         /// Uses the components config object to start the game.
         /// </summary>
-        public void StartGame() => StartGame(_config);
+        // public void StartGame() => StartGame(_config);
+
+        public static JigsawManager Instance;
+
+        public void Awake()
+        {
+            Instance = this;
+        }
 
         /// <summary>
         /// Starts the game with given config.
         /// </summary>
         /// <param name="config">The config the start game with.</param>
-        public void StartGame(JigsawConfig config)
+        public void StartGame(PhotoData data)
         {
-            //_currentConfig = config;
-            _currentConfig = DataMgr.GetCurLevelData();
+            // _currentConfig = config;
+            // _currentConfig = DataMgr.GetCurLevelData();
             _isGameActive = true;
             _isPaused = false;
-
+            _currentConfig = new JigsawConfig();
+            _currentConfig.Image = Resources.Load<Sprite>("Sprites/" + data.photoname + data.id);
+            _currentConfig.Size = data.size;
             _timer.Reset();
             _misplacedPiecesCounter = 0;
             _boardUI.CleanBoard();
@@ -137,15 +151,15 @@ namespace DTT.MiniGame.Jigsaw
             Finished?.Invoke();
         }
 
-        /// <summary>
-        /// Starts the game.
-        /// </summary>
-        private IEnumerator Start()
-        {
-            yield return new WaitForEndOfFrame();
-            if (_startOnStart)
-                StartGame();
-        }
+        // /// <summary>
+        // /// Starts the game.
+        // /// </summary>
+        // private IEnumerator Start()
+        // {
+        //     yield return new WaitForEndOfFrame();
+        //     if (_startOnStart)
+        //         StartGame();
+        // }
 
         /// <summary>
         /// Subscribes to events.

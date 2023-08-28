@@ -14,7 +14,7 @@ namespace LOADING
         private UIPanel _uiPanel;
         private GComponent _ui;
         private GProgressBar _progressBar;
-        private float _timesub = 0.5f;
+        private float _timesub = 1.5f;
         private float _time = 0;
 
         public void Awake()
@@ -36,7 +36,7 @@ namespace LOADING
             _time += _timesub;
             if (_time > 1)
             {
-                _progressBar.value += 20f;
+                _progressBar.value += 1f;
                 _time = 0;
             }
 

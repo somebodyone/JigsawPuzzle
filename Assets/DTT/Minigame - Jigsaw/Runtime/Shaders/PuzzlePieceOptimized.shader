@@ -100,7 +100,7 @@
 				float3 color = c.rgb;
 
 				float dist = distance(i.uv) ;
-
+				
 				alfa *= 1-dist;
 				/*
 				if (alfa > 0 && alfa < 1)
