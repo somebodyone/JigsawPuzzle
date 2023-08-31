@@ -196,6 +196,11 @@ namespace DTT.MiniGame.Jigsaw
                 return;
             ForceFinish();
         }
+        
+        private bool CheckOnePieceCurrent(JigsawPuzzlePieceUI piece)
+        {
+            return _board.VerifyOnePiece(piece.Piece);
+        }
 
         /// <summary>
         /// Stops the timer of the game.

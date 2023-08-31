@@ -44,7 +44,7 @@ namespace DLAM
                 PhotoData data = new PhotoData();
                 data.id = i;
                 data.photoname = "people_";
-                data.size = new Vector2Int(8, 12);
+                data.size = new Vector2Int(4, 6);
                 _data.datas.Add(data);
             }
             _data.recommenddata = _data.datas[Random.Range(0, 7)];

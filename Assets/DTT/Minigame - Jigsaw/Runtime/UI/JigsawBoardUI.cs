@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using DTT.Utils.Extensions;
+using UnityEngine.UI;
 
 namespace DTT.MiniGame.Jigsaw.UI
 {
@@ -107,26 +108,31 @@ namespace DTT.MiniGame.Jigsaw.UI
             var layout = board.CorrectLayout;
             _pieces = new JigsawPuzzlePieceUI[board.CorrectLayout.Count];
 
+            _piecesContainer.GetComponent<Image>().sprite = board.Config.Image;
             // Define counter for accessing UI elements index.
             int counter = 0;
             foreach (var kvp in layout)
             {
                 // Create new piece from prefab.
-                JigsawPuzzlePieceUI piece = Instantiate(_prefabPiece, _offBoardPiecesContainer);
+                JigsawPuzzlePieceUI piece = Instantiate(_prefabPiece, _piecesContainer);
                 _pieces[counter] = piece;
                 piece.RectTransform.sizeDelta = _piecesContainer.rect.size / board.Config.Size;
                 piece.ApplyData(kvp.Value, board.Config.Image, kvp.Key, 1.0f / board.Config.Size.x, 1.0f / board.Config.Size.y);
                 piece.MoveOffBoard();
                 piece.raycastTarget = true;
                 piece.rectTransform.localScale = Vector3.one * REQUIRED_IMAGE_SIZE;
-                // Place on a random position.
-                piece.rectTransform.position = GetRandomSpawnPosition(piece.rectTransform.rect.size);
 
+
+                piece.transform.localPosition = piece.GridToLocal(Vector2Int.zero);
+
+                
                 piece.PickUp += HandlePickedUpPiece;
                 piece.Drop += HandleDroppedPiece;
                 ++counter;
             }
         }
+        
+        
 
         /// <summary>
         /// Cleans up all the event subscriptions and destroys the UI elements.
@@ -208,7 +214,7 @@ namespace DTT.MiniGame.Jigsaw.UI
             // Check if the piece is placed on the board.
             if (piece.rectTransform.GetWorldRect().Overlaps(_piecesContainer.GetWorldRect()))
             {
-                // Determine grid position.
+                // 拼图数据位置
                 Vector2Int pos = piece.WorldToGrid(_piecesContainer.InverseTransformPoint(piece.rectTransform.position));
 
                 // Retrieve the current layout from the grid.
@@ -222,7 +228,7 @@ namespace DTT.MiniGame.Jigsaw.UI
                 else
                 {
                     // If it overlaps with another piece we place it off the board but keep the position.
-                    piece.rectTransform.SetParent(_offBoardPiecesContainer);
+                    //piece.rectTransform.SetParent(_offBoardPiecesContainer);
                 }
             }
 
@@ -238,12 +244,16 @@ namespace DTT.MiniGame.Jigsaw.UI
         {
             piece.rectTransform.SetParent(_piecesContainer);
             piece.Move(pos);
+            //音频 和checkFinish
             PieceDroppedOnBoard?.Invoke(piece);
 
             // Check if the piece is placed on the correct slot in the layout.
+            //是否归入正确位置
             if (_board.CorrectLayout[pos] != piece.Piece)
+                //加了一次错误步骤
                 PieceMisplaced?.Invoke(piece);
             else
+            //没加方法
                 PieceCorrectlyPlaced?.Invoke(piece);
         }
 
@@ -253,11 +263,11 @@ namespace DTT.MiniGame.Jigsaw.UI
         /// <param name="piece">The piece to place.</param>
         private void PlacePieceOutsideOfBoard(JigsawPuzzlePieceUI piece)
         {
-            piece.rectTransform.SetParent(_offBoardPiecesContainer);
+            //piece.rectTransform.SetParent(_offBoardPiecesContainer);
 
             // Check if the piece is placed in an area off the board.
-            if (_offBoardAreas.Any(t => t.GetWorldRect().Contains(piece.rectTransform.position)))
-                return;
+            //if (_offBoardAreas.Any(t => t.GetWorldRect().Contains(piece.rectTransform.position)))
+             //   return;
 
             piece.SnapBack();
         }

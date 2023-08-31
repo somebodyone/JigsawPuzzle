@@ -35,6 +35,8 @@ namespace DTT.MiniGame.Jigsaw
         /// </summary>
         private Dictionary<Vector2Int, JigsawPuzzlePiece> _correctLayout;
 
+        public Vector2Int lastPos;
+
         /// <summary>
         /// Initializes the board. This creates all the pieces and maps them to their correct positions.
         /// </summary>
@@ -52,6 +54,7 @@ namespace DTT.MiniGame.Jigsaw
                     Vector2Int currentPosition = new Vector2Int(i, j);
                     JigsawPuzzlePiece currentPiece = _correctLayout[currentPosition] = new JigsawPuzzlePiece();
 
+                    lastPos = currentPosition;
                     // Set the connector types of all the edges to EDGE.
                     if (i == 0)
                         currentPiece.SetConnector(Direction.WEST, ConnectorType.EDGE);
@@ -105,6 +108,28 @@ namespace DTT.MiniGame.Jigsaw
             return true;
         }
 
+        internal bool VerifyOnePiece(JigsawPuzzlePiece piece)
+        {
+            Dictionary<Vector2Int, JigsawPuzzlePiece> current = CurrentLayout();
+
+            if (true)
+            {
+                
+            }
+            // Check whether the amount of pieces in the layout are equal.
+            // If not it can't be correct.
+            if (current.Count != _correctLayout.Count)
+                return false;
+
+            // Check the position of every piece and make sure it matches the original.
+            foreach (var positionPiecePair in current)
+                if (_correctLayout[positionPiecePair.Key] != positionPiecePair.Value)
+                    return false;
+
+            return true;
+        }
+        
+        
         /// <summary>
         /// Checks whether the given position is out of bounds of the grid.
         /// </summary>
