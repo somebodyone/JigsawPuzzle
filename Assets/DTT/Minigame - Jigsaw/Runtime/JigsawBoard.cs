@@ -110,23 +110,9 @@ namespace DTT.MiniGame.Jigsaw
 
         internal bool VerifyOnePiece(JigsawPuzzlePiece piece)
         {
-            Dictionary<Vector2Int, JigsawPuzzlePiece> current = CurrentLayout();
+            if (piece.Position == null) return false;
 
-            if (true)
-            {
-                
-            }
-            // Check whether the amount of pieces in the layout are equal.
-            // If not it can't be correct.
-            if (current.Count != _correctLayout.Count)
-                return false;
-
-            // Check the position of every piece and make sure it matches the original.
-            foreach (var positionPiecePair in current)
-                if (_correctLayout[positionPiecePair.Key] != positionPiecePair.Value)
-                    return false;
-
-            return true;
+            return _correctLayout[piece.Position.Value] == piece;
         }
         
         

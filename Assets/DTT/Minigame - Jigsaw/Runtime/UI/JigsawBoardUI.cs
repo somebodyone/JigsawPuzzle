@@ -201,6 +201,9 @@ namespace DTT.MiniGame.Jigsaw.UI
         /// <param name="piece">The piece that's been picked up.</param>
         private void HandlePickedUpPiece(JigsawPuzzlePieceUI piece)
         {
+            //判断拼图是否在正确的位置 无法移动正确位置的拼图
+            if (JigsawManager.Instance.CheckOnePieceCurrent(piece)) return;
+
             piece.rectTransform.SetParent(_draggingPieceContainer);
             piece.MoveOffBoard();
         }

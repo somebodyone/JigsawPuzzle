@@ -197,7 +197,7 @@ namespace DTT.MiniGame.Jigsaw
             ForceFinish();
         }
         
-        private bool CheckOnePieceCurrent(JigsawPuzzlePieceUI piece)
+        public bool CheckOnePieceCurrent(JigsawPuzzlePieceUI piece)
         {
             return _board.VerifyOnePiece(piece.Piece);
         }
