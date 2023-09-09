@@ -11,12 +11,14 @@ namespace DLAM
 
         public void Awake() 
         {
+            DLPlayer.CheckInit();
             DLLoadManager.LoadPakege("Common");
             DLLoadManager.LoadPakege("Main");
             CoreDataPresenter.Instance.OnInit();
             CateGorayPresenter.Instance.OnInit();
             GamePresenter.Instance.OnInit();
             RewardPresenter.Instance.OnInit();
+            DailyPuzzlePresenter.Instance.OnInit();
             GameManager.Instance.InitManager();
         }
 

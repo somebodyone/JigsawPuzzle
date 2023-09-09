@@ -12,6 +12,11 @@ namespace DLBASE
             Update,
             SecondTrick
         }
+        
+        public class PlayerData
+        {
+            public long timer;
+        }
 
         public class Lisioner : DLLisioner
         {
@@ -36,17 +41,22 @@ namespace DLBASE
             }
         }
 
+        private static DLOpition<PlayerData> _opition;
+        private static PlayerData _data;
         private static DLBase _base;
         public static Timer timer;
         public static Lisioner lisioner = new Lisioner();
 
         public static void CheckInit()
         {
+            _opition = DLDataManager.GetOpition<PlayerData>();
+            _data = _opition.data;
             GameObject go = new GameObject();
             timer = new Timer();
             go.name = "DLPlayer";
             go.AddComponent<DLBase>();
             _base = go.GetComponent<DLBase>();
         }
+        
     }
 }

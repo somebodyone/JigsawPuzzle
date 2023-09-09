@@ -20,6 +20,7 @@ namespace DLAM
             UIObjectFactory.SetPackageItemExtension(CateGorayPage.URL, typeof(CateGorayPage));
             UIObjectFactory.SetPackageItemExtension(DiffctyCom.URL, typeof(DiffctyCom));
             UIObjectFactory.SetPackageItemExtension(DailyPuzzlePage.URL, typeof(DailyPuzzlePage));
+            UIObjectFactory.SetPackageItemExtension(DailyPuzzleCompent.URL, typeof(DailyPuzzleCompent));
         }
 
         public void GameStart()

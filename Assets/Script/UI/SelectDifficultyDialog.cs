@@ -9,7 +9,6 @@ namespace DLAM
         private GButton _close;
         private GButton _enter;
         private PhotoData _data;
-        private Transition _transition;
         private GLabel _icon;
         private GList _list;
         private List<DiffctyCom> _listitems = new List<DiffctyCom>();
@@ -30,7 +29,6 @@ namespace DLAM
             _enter = contentPlane.GetChild("enter").asButton;
             _list = contentPlane.GetChild("list").asList;
             _icon = contentPlane.GetChild("title").asLabel;
-            _transition = contentPlane.GetTransition("close");
             _close = contentPlane.GetChild("back").asButton;
             _icon.icon = "ui://Main/" + _data.photoname + _data.id;
             for (int i = 0; i < 3; i++)
@@ -52,7 +50,10 @@ namespace DLAM
             }
             _close.onClick.Add(() =>
             {
-                _transition.Play(1, 0, () => { DLDialogManager.Instance.CloseDialog<SelectDifficultyDialog>(); });
+                contentPlane.TweenMoveX(GRoot.inst.width, 0.3f).OnComplete(() =>
+                {
+                    DLDialogManager.Instance.CloseDialog<SelectDifficultyDialog>();
+                });
             });
             _enter.onClick.Add(() =>
             {

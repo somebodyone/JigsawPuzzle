@@ -10,7 +10,6 @@ namespace DLAM
         private GButton _goldbtn;
         private GComponent _adbtn;
         private GButton _backbtn;
-        private Transition _closetransition;
         private PhotoData _data;
         private long _gold => RewardPresenter.Instance.GOLD;
 
@@ -31,11 +30,10 @@ namespace DLAM
             _goldbtn = contentPlane.GetChild("goldbtn").asButton;
             _backbtn = contentPlane.GetChild("back").asButton;
             _adbtn = contentPlane.GetChild("adbtn").asButton;
-            _closetransition = contentPlane.GetTransition("close");
             _iconLabel.icon = "ui://Main/" + _data.photoname + _data.id;
             _backbtn.onClick.Add(() =>
             {
-                _closetransition.Play(1,0, () =>
+                contentPlane.TweenMoveY(GRoot.inst.height, 0.3f).OnComplete(() =>
                 {
                     DLDialogManager.Instance.CloseDialog<UnlockPhotoDialog>();
                 });

@@ -671,6 +671,7 @@ PlayerSettings:
   webGLDecompressionFallback: 0
   scriptingDefineSymbols:
     1: PUBLISHING_TOOLS_ASSET_STORE_RELEASE;MINIGAME_-_BUBBLE_SHOOTER_ASSET_STORE_RELEASE;MINIGAME_-_JIGSAW_ASSET_STORE_RELEASE;FAIRYGUI_TMPRO
+    7: FAIRYGUI_TMPRO
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:

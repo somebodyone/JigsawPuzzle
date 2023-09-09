@@ -11,7 +11,6 @@ namespace DLAM
         private CateGorayItemData _itemdata;
         private List<PhotoData> _datas;
         private GTextField _title;
-        private Transition _closeTransition;
 
 
         public override void OnInit()
@@ -30,11 +29,10 @@ namespace DLAM
             _title = contentPlane.GetChild("title").asTextField;
             _back = contentPlane.GetChild("back").asButton;
             _list = contentPlane.GetChild("list").asList;
-            _closeTransition = contentPlane.GetTransition("close");
             _title.text = _itemdata.namekey;
             _back.onClick.Add(() =>
             {
-                _closeTransition.Play(1,0, () =>
+                contentPlane.TweenMoveY(GRoot.inst.height, 0.3f).OnComplete(() =>
                 {
                     DLDialogManager.Instance.CloseDialog<SelectPicDialog>();
                 });

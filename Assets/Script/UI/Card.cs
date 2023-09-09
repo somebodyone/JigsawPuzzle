@@ -31,7 +31,15 @@ namespace DLAM
             });
             _cardbtn.onClick.Add(() =>
             {
-                DLDialogManager.Instance.OpenDialog<SelectDifficultyDialog>(_data);
+                if (_data.islock)
+                {
+                    DLDialogManager.Instance.OpenDialog<UnlockPhotoDialog>(_data);
+                    // TipsManager.ShowTips("PLEASE UNLOCK PICTRUE");
+                }
+                else
+                {
+                    DLDialogManager.Instance.OpenDialog<SelectDifficultyDialog>(_data);
+                }
             });
             UpdateCompent();
         }
