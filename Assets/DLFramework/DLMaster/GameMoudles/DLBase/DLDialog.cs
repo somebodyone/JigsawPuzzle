@@ -7,7 +7,7 @@ namespace DLBASE
     {
         public GComponent contentPlane;
         protected GGraph mask;
-        protected bool _showMask = false;
+        protected virtual bool _showMask => false;
         public abstract void OnInit();
         public void SetContentWith(string pakege, string name)
         {

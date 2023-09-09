@@ -6,7 +6,7 @@ namespace DLAM
     {
         public override void OnInit()
         {
-            
+            SetContentWith("Dialog", "游戏进入选择界面");
         }
     }
 }

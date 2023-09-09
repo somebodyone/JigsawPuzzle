@@ -1,4 +1,5 @@
 using System;
+using DLBASE;
 using FairyGUI;
 
 namespace DLAM
@@ -25,6 +26,7 @@ namespace DLAM
         private GButton _dailypuzzle;
         private GButton _category;
         private GButton _mypuzzle;
+        private GButton _setbtn;
         private GameData _data => GamePresenter.Instance.GameData;
         private RewardData _rewardData => RewardPresenter.Instance.GetData();
 
@@ -48,7 +50,12 @@ namespace DLAM
             _category = _down.GetChild("category").asButton;
             _mypuzzle = _down.GetChild("mypuzzle").asButton;
             _top = GetChild("top").asCom;
+            _setbtn = _top.GetChild("set").asButton;
             _homepage.onClick.Add(() => { ChangePage(PageEnum.HomePage);});
+            _setbtn.onClick.Add(() =>
+            {
+                DLDialogManager.Instance.OpenDialog<SettingDialog>();
+            });
             _dailypuzzle.onClick.Add(() => { ChangePage(PageEnum.DailyPuzzle);});
             _category.onClick.Add(() => { ChangePage(PageEnum.Category);});
             _mypuzzle.onClick.Add(() => { ChangePage(PageEnum.Mypuzzle);});
