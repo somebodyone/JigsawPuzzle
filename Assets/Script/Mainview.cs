@@ -19,6 +19,7 @@ namespace DLAM
         private BigCard _bigCard;
         private Controller _controller;
         private CateGorayPage _cateGorayPage;
+        private DailyPuzzlePage _dailyPuzzlePage;
 
         private GComponent _top;
         private GComponent _down;
@@ -44,6 +45,8 @@ namespace DLAM
             }
             _cateGorayPage = GetChild("cateGorayPage") as CateGorayPage;
             _cateGorayPage.OnInit();
+            _dailyPuzzlePage = GetChild("dailyPuzzle") as DailyPuzzlePage;
+            _dailyPuzzlePage.Init();
             _down = GetChild("down").asCom;
             _homepage = _down.GetChild("homepage").asButton;
             _dailypuzzle = _down.GetChild("dailypuzzle").asButton;
