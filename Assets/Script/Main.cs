@@ -13,19 +13,18 @@ namespace DLAM
         {
             DLLoadManager.LoadPakege("Common");
             DLLoadManager.LoadPakege("Main");
-            
             CoreDataPresenter.Instance.OnInit();
             CateGorayPresenter.Instance.OnInit();
             GamePresenter.Instance.OnInit();
             RewardPresenter.Instance.OnInit();
-            
             GameManager.Instance.InitManager();
         }
 
         public void Start()
         {
             _main = UIPackage.CreateObject(MainUrl, "主页").asCom;
-            _main.size = GRoot.inst.size;
+            _main.MakeFullScreen();
+            // _main.AddRelation(GRoot.inst, RelationType.Size);
             GRoot.inst.AddChild(_main);
             MainView main = _main as MainView;
             main.Init();

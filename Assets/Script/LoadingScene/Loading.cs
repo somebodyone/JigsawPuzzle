@@ -25,6 +25,7 @@ namespace LOADING
         {
             _ui = UIPackage.CreateObject(LoadingUrl, "加载页").asCom;
             _ui.size = GRoot.inst.size;
+            _ui.AddRelation(GRoot.inst,RelationType.Size);
             GRoot.inst.AddChild(_ui);
             _progressBar = _ui.GetChild("slider").asProgress;
             _field = _progressBar.GetChild("text").asTextField;

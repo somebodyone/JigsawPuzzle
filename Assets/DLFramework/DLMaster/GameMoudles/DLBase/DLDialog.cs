@@ -16,6 +16,8 @@ namespace DLBASE
             contentPlane = UIPackage.CreateObject(pakege, name).asCom;
             contentPlane.size = GRoot.inst.size;
             GRoot.inst.AddChild(contentPlane);
+            contentPlane.AddRelation(GRoot.inst,RelationType.Size);
+            contentPlane.SetPivot(0.5f,0.5f);
         }
 
         public virtual void Init()
