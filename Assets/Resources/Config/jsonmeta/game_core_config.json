@@ -1,0 +1,17 @@
+{
+    "version":300,
+    "subVersion":1,
+    "minSubVersion":1,
+    "CateGorayConfig":[
+        "All puzzles",
+        "Collect",
+        "Mystery puzzle",
+        "Nature",
+        "Landmark",
+        "Animal",
+        "Flowers",
+        "Pet",
+        "Cartoon",
+        "Gril"
+    ]
+}

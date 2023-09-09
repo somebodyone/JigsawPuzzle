@@ -14,7 +14,7 @@ namespace DLAM
             icon = "ui://Main/people_" + data.id;
             onClick.Add(() =>
             {
-                DLDialogManager.Instance.OpenDialog<GameView>(_data);
+                DLDialogManager.Instance.OpenDialog<GameDialog>(_data);
             });
         }
     }

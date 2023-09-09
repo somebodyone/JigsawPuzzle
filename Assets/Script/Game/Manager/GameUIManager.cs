@@ -15,7 +15,7 @@ namespace DLAM
             _back.onClick.AddListener(() =>
             {
                 GameManager.Instance.EndGame();
-                DLDialogManager.Instance.CloseDialog<GameView>();
+                DLDialogManager.Instance.CloseDialog<GameDialog>();
             });
         }
     }

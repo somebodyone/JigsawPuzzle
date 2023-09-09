@@ -14,9 +14,12 @@ namespace DLAM
         {
             _perfab = Resources.Load<GameObject>("Game");
             UIObjectFactory.SetPackageItemExtension(MainView.URL, typeof(MainView));
+            UIObjectFactory.SetPackageItemExtension(MainView.URL, typeof(MainView));
             UIObjectFactory.SetPackageItemExtension(BigCard.URL, typeof(BigCard));
             UIObjectFactory.SetPackageItemExtension(Card.URL, typeof(Card));
-            UIObjectFactory.SetPackageItemExtension(Fragments.URL, typeof(Fragments));
+            UIObjectFactory.SetPackageItemExtension(CateGorayPage.URL, typeof(CateGorayPage));
+            UIObjectFactory.SetPackageItemExtension(DiffctyCom.URL, typeof(DiffctyCom));
+            
         }
 
         public void GameStart()

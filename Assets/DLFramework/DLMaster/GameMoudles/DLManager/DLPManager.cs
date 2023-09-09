@@ -9,7 +9,6 @@ namespace DLBASE
         {
             var t = typeof(T);
             DLPresenter obj =(DLPresenter) Activator.CreateInstance(t);
-            obj.OnInit();
             return (T)obj;
         }
     }

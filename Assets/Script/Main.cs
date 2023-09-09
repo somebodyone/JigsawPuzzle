@@ -13,14 +13,16 @@ namespace DLAM
     {
         public static string MainUrl = "Main";
         private GComponent _main;
-        
-        
+
         public void Awake() 
         {
             DLLoadManager.LoadPakege("Common");
             DLLoadManager.LoadPakege("Main");
             
+            CoreDataPresenter.Instance.OnInit();
+            CateGorayPresenter.Instance.OnInit();
             GamePresenter.Instance.OnInit();
+            RewardPresenter.Instance.OnInit();
             
             GameManager.Instance.InitManager();
         }
