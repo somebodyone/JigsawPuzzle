@@ -28,6 +28,52 @@ namespace DLBASE
             }
         }
 
+        public static string GetMonth(int month)
+        {
+            string key = "";
+            switch (month)
+            {
+                case 1:
+                    key = "January";
+                    break;
+                case 2:
+                    key = "February";
+                    break;
+                case 3:
+                    key = "March";
+                    break;
+                case 4:
+                    key = "April";
+                    break;
+                case 5:
+                    key = "May";
+                    break;
+                case 6:
+                    key = "June";
+                    break;
+                case 7:
+                    key = "July";
+                    break;
+                case 8:
+                    key = "August";
+                    break;
+                case 9:
+                    key = "September";
+                    break;
+                case 10:
+                    key = "October";
+                    break;
+                case 11:
+                    key = "November";
+                    break;
+                case 12:
+                    key = "December";
+                    break;
+            }
+
+            return key;
+        }
+        
         public static void RandomArray(List<int> array)
         {
             if (array.Count <= 1) return;

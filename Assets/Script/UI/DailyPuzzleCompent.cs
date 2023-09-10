@@ -18,6 +18,7 @@ namespace DLAM
             _time = GetChild("time").asTextField;
             _loader = GetChild("card").asButton;
             _loader.icon = "ui://Main/"+data.photoname + data.id;
+            _time.text = GameUtlis.GetMonth(System.DateTime.Now.Month)+" "+ System.DateTime.Now.Day;
             _entergame.onClick.Add(() =>
             {
                 DLDialogManager.Instance.OpenDialog<SelectDifficultyDialog>(_data);

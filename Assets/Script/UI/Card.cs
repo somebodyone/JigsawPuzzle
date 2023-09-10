@@ -31,7 +31,7 @@ namespace DLAM
             });
             _cardbtn.onClick.Add(() =>
             {
-                if (_data.islock)
+                 if (_data.islock)
                 {
                     DLDialogManager.Instance.OpenDialog<UnlockPhotoDialog>(_data);
                     // TipsManager.ShowTips("PLEASE UNLOCK PICTRUE");
