@@ -17,7 +17,7 @@ namespace DLAM
         public Button test;
         public static GameUIManager Instance;
         [SerializeField]
-        private GamePopupUI _popup;
+        // private GamePopupUI _popup;
 
         private bool isShowBg;
         public void Start()
@@ -46,8 +46,8 @@ namespace DLAM
         
         private void OnEnable()
         {
-            _popup.ResumeButtonPressed += ResumeGame;
-            _popup.HomeButtonPressed += ToHome;
+            // _popup.ResumeButtonPressed += ResumeGame;
+            // _popup.HomeButtonPressed += ToHome;
         }
 
         /// <summary>
@@ -56,8 +56,8 @@ namespace DLAM
         private void OnDisable()
         {
 
-            _popup.ResumeButtonPressed -= ResumeGame;
-            _popup.HomeButtonPressed -= ToHome;
+            // _popup.ResumeButtonPressed -= ResumeGame;
+            // _popup.HomeButtonPressed -= ToHome;
         }
 
         
@@ -66,7 +66,7 @@ namespace DLAM
         /// </summary>
         private void ResumeGame()
         {
-            _popup.Show(false);
+            // _popup.Show(false);
         }
 
         /// <summary>
@@ -74,9 +74,10 @@ namespace DLAM
         /// </summary>
         private void PauseGame()
         {
-            _popup.Show(true);
-            _popup.SetTitleToPaused();
-            _popup.EnableResumeButton(true);
+            // _popup.Show(true);
+            // _popup.SetTitleToPaused();
+            // _popup.EnableResumeButton(true);
+            PopUpManager.Ins.Show();
         }
 
         /// <summary>

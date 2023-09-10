@@ -20,6 +20,7 @@ namespace DLAM
             _transition = contentPlane.GetTransition("close");
             _close.onClick.Add(() =>
             {
+                mask.TweenFade(0, 0.25f);
                 contentPlane.TweenMoveY(GRoot.inst.height, 0.3f).OnComplete(() =>
                 {
                     DLDialogManager.Instance.CloseDialog<SettingDialog>();
