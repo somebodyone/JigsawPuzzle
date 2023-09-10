@@ -31,6 +31,7 @@ namespace DLAM
         public int time;//持续时间
         public int dayily;//日期
         public int selecetId;
+        public Sprite sprite;
     }
     
     public class GameData

@@ -112,21 +112,6 @@ namespace DTT.MiniGame.Jigsaw
         {
             Instance = this;
         }
-
-        /// <summary>
-        /// 从FGUI中取一张图片并返回一个Sprite（不建议频繁使用）
-        /// </summary>
-        /// <param name="packageName"></param>
-        /// <param name="texName"></param>
-        public static Sprite GetSpriteByFGUI(string packageName, string texName)
-        {
-            FairyGUI.GImage gImage = FairyGUI.UIPackage.CreateObject(packageName, texName).asImage;
-            Rect rect = new Rect(gImage.texture.uvRect.x * gImage.texture.nativeTexture.width, gImage.texture.uvRect.y * gImage.texture.nativeTexture.height,
-                gImage.texture.uvRect.width * gImage.texture.nativeTexture.width, gImage.texture.uvRect.height * gImage.texture.nativeTexture.height);
-            Sprite sprite = Sprite.Create((Texture2D)gImage.texture.nativeTexture, rect, new Vector2(0.5f, 0.5f), 100);
-            gImage.Dispose();
-            return sprite;
-        }
         
         /// <summary>
         /// Starts the game with given config.
@@ -138,8 +123,9 @@ namespace DTT.MiniGame.Jigsaw
             _isGameActive = true;
             _isPaused = false;
             _currentConfig = new JigsawConfig();
-            _currentConfig.Image = Resources.Load<Sprite>("Sprites/" + data.photoname + data.id);
-            
+            Sprite sprite = Resources.Load<Sprite>("animal0");
+            _currentConfig.Image = sprite;
+            _currentConfig.Image = data.sprite;
             switch (data.selecetId)
             {
                 case 0:
