@@ -199,6 +199,7 @@ namespace DTT.MinigameBase.UI
                         $":{JigsawManager.Instance.curData.reward[JigsawManager.Instance.curData.selecetId]}";
                     break;
             }
+            
 
         }
     }

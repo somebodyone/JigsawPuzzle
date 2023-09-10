@@ -68,6 +68,22 @@ namespace DTT.Tweening
             return _worker.StartCoroutine(ValueC(from, to, time, 0, easing, onValueChanged, onComplete));
         }
         
+        public static Coroutine TwoValue
+        (float from1, 
+            float from2,
+            float to1, 
+            float to2, 
+            float time, 
+            Easing easing = Easing.EASE_IN_OUT_SINE, 
+            Action<float,float> onValueChanged = null,
+            Action onComplete = null)
+        {
+            
+            return _worker.StartCoroutine(TwoValueC(from1, from2,to1,to2, time, 0, easing, onValueChanged, onComplete));
+            
+        }
+        
+        
         /// <summary>
         /// Starts a tween.
         /// </summary>
@@ -104,5 +120,38 @@ namespace DTT.Tweening
             yield return null;
             onComplete?.Invoke();
         }
+        
+        
+        public static IEnumerator TwoValueC
+        (float from1, 
+            float from2, 
+            float to1, 
+            float to2, 
+            float time, 
+            float delay = 0, 
+            Easing easing = Easing.EASE_IN_OUT_SINE, 
+            Action<float,float> onValueChanged = null,
+            Action onComplete = null)
+        {
+            yield return new WaitForSeconds(delay);
+            float value1 = from1;
+            float value2 = from2;
+            float startTime = Time.time;
+            while (startTime + time > Time.time)
+            {
+                float normalized = (Time.time - startTime) / time;
+
+                value1 = Mathf.LerpUnclamped(from1, to1, TweenDefinitions.TweenMap[easing](normalized));
+
+                value2 = Mathf.LerpUnclamped(from2, to2, TweenDefinitions.TweenMap[easing](normalized));
+                onValueChanged?.Invoke(value1,value2);
+
+                yield return null;
+            }
+            yield return null;
+            onComplete?.Invoke();
+        }
+        
+        
     }
 }
