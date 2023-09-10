@@ -1,4 +1,5 @@
 ﻿using System;
+using DTT.MiniGame.Jigsaw;
 using DTT.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,6 +12,10 @@ namespace DTT.MinigameBase.UI
     /// </summary>
     public class GamePopupUI : MonoBehaviour
     {
+        
+        [SerializeField]
+        private JigsawManager _miniGame;
+        
         /// <summary>
         /// Called when the resume button is pressed.
         /// </summary>
@@ -26,11 +31,13 @@ namespace DTT.MinigameBase.UI
         /// </summary>
         public event Action HomeButtonPressed;
         
+        public event Action OnFinished;
+        
         /// <summary>
         /// The text object for the title.
         /// </summary>
         [SerializeField]
-        private Text _titleText;
+        public Text _titleText;
         
         /// <summary>
         /// The text object for the backdrop of the title.
@@ -66,14 +73,31 @@ namespace DTT.MinigameBase.UI
         /// The animation of showing the popup.
         /// </summary>
         private Coroutine _showAnimation;
-
+        
+        
+        [SerializeField]
+        private RectTransform buttons;
+        
+        [SerializeField]
+        private RectTransform reward;
+        
+        [SerializeField]
+        private Text rewardValue;
+        
+        public enum PopType
+        {
+            normal,
+            reward,
+        }
+        
         /// <summary>
         /// Adds listeners.
         /// </summary>
         private void OnEnable()
         {
+            _miniGame.Finish += FinishGame;
             _resumeButton.onClick.AddListener(OnResumeButtonClicked);
-            _restartButton.onClick.AddListener(OnRestartButtonClicked);
+            //_restartButton.onClick.AddListener(OnRestartButtonClicked);
             _homeButton.onClick.AddListener(OnHomeButtonClicked);
         }
 
@@ -82,11 +106,19 @@ namespace DTT.MinigameBase.UI
         /// </summary>
         private void OnDisable()
         {
+            _miniGame.Finish -= FinishGame;
             _resumeButton.onClick.RemoveListener(OnResumeButtonClicked);
-            _restartButton.onClick.RemoveListener(OnRestartButtonClicked);
+            //_restartButton.onClick.RemoveListener(OnRestartButtonClicked);
             _homeButton.onClick.RemoveListener(OnHomeButtonClicked);
         }
 
+        
+        private void FinishGame(JigsawResult result)
+        {
+            Show(true,PopType.reward);
+            SetTitleToFinished();
+        }
+        
         /// <summary>
         /// Called when the resume button is pressed.
         /// </summary>
@@ -100,12 +132,8 @@ namespace DTT.MinigameBase.UI
         /// <summary>
         /// Called when the home button is pressed.
         /// </summary>
-        private void OnHomeButtonClicked()
-        {
-            AsyncOperation async = SceneManager.LoadSceneAsync("MainScene");
-            //HomeButtonPressed?.Invoke();
-        }
-
+        private void OnHomeButtonClicked()=> HomeButtonPressed?.Invoke();
+        
         /// <summary>
         /// Sets the title for the paused state.
         /// </summary>
@@ -146,7 +174,7 @@ namespace DTT.MinigameBase.UI
         /// Shows the popup based on the state.
         /// </summary>
         /// <param name="state">Whether to show the popup.</param>
-        public void Show(bool state)
+        public void Show(bool state,PopType type = PopType.normal)
         {
             if(_showAnimation != null)
                 StopCoroutine(_showAnimation);
@@ -155,6 +183,22 @@ namespace DTT.MinigameBase.UI
             _canvasGroup.blocksRaycasts = state;
 
             _canvasGroup.alpha = state ? 1f : 0f;
+
+            switch (type)
+            {
+                case PopType.normal:
+                    _resumeButton.transform.gameObject.SetActive(true);
+                    reward.gameObject.SetActive(false);
+                    buttons.transform.localPosition = new Vector3(0, -80, 0);
+                    break;
+                case PopType.reward:
+                    _resumeButton.transform.gameObject.SetActive(false);
+                    reward.gameObject.SetActive(true);
+                    buttons.transform.localPosition = new Vector3(0, -160, 0);
+                    rewardValue.text =
+                        $":{JigsawManager.Instance.curData.reward[JigsawManager.Instance.curData.selecetId]}";
+                    break;
+            }
 
         }
     }

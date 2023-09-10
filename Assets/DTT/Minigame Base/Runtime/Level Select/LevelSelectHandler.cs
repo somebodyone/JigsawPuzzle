@@ -70,25 +70,7 @@ namespace DTT.MinigameBase.LevelSelect
         protected void Awake()
         {
             _minigame = FindObjectOfType<TMinigame>();
-
-            //AsyncOperation async = SceneManager.LoadSceneAsync("MainScene", LoadSceneMode.Additive);//LevelSelect.SCENE_NAME
             
-            /*
-            if (async == null)
-            {
-                Debug.LogError("The scene 'Level Select' should be added to the Build Settings so it can be loaded in!");
-                return;
-            }
-            */
-
-            /*async.completed += _ =>
-            {
-                _levelSelect = FindObjectOfType<LevelSelect>();
-                _levelSelectCanvasGroup = _levelSelect.transform.root.gameObject.AddComponent<CanvasGroup>();
-                _levelDatabase.Load();
-                _levelSelect.Populate(_levelDatabase);
-                _levelSelect.LevelSelected += OnLevelSelected;
-            };*/
         }
 
         /// <summary>
@@ -120,39 +102,7 @@ namespace DTT.MinigameBase.LevelSelect
         /// <param name="result">The result of the user.</param>
         protected virtual void OnMinigameFinished(TResult result)
         {
-            /*float score = CalculateScore(result);
-            int index = _levelSelect.SelectedLevel.LevelNumber - 1;
 
-            if (_levelDatabase.Data[index].score < score)
-            _levelDatabase.SetScore(index, score);
-
-            if(_levelSelect.SelectedLevel.LevelNumber < _levelDatabase.Data.Count)
-                _levelDatabase.SetLocked(_levelSelect.SelectedLevel.LevelNumber, false);
-
-            // Save all the progress in the file structure before population.
-            _levelSelect.Populate(_levelDatabase);
-            
-            if(_returnToLevelSelectOnFinish)
-                ShowLevelSelect();*/
-            
-            AsyncOperation async = SceneManager.LoadSceneAsync("MainScene");//LevelSelect.SCENE_NAME
-            
-            /*
-            if (async == null)
-            {
-                Debug.LogError("The scene 'Level Select' should be added to the Build Settings so it can be loaded in!");
-                return;
-            }
-            */
-
-            /*async.completed += _ =>
-            {
-                _levelSelect = FindObjectOfType<LevelSelect>();
-                _levelSelectCanvasGroup = _levelSelect.transform.root.gameObject.AddComponent<CanvasGroup>();
-                _levelDatabase.Load();
-                _levelSelect.Populate(_levelDatabase);
-                _levelSelect.LevelSelected += OnLevelSelected;
-            };*/
         }
 
         /// <summary>

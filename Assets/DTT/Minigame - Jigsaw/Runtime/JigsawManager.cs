@@ -78,8 +78,9 @@ namespace DTT.MiniGame.Jigsaw
         /// <summary>
         /// Current active config.
         /// </summary>
-        private JigsawConfig _currentConfig;
+        public JigsawConfig _currentConfig;
 
+        public PhotoData curData;
         /// <summary>
         /// The board logic.
         /// </summary>
@@ -133,22 +134,32 @@ namespace DTT.MiniGame.Jigsaw
         /// <param name="config">The config the start game with.</param>
         public void StartGame(PhotoData data)
         {
-            // _currentConfig = config;
-            // _currentConfig = DataMgr.GetCurLevelData();
+            curData = data;
             _isGameActive = true;
             _isPaused = false;
             _currentConfig = new JigsawConfig();
             _currentConfig.Image = Resources.Load<Sprite>("Sprites/" + data.photoname + data.id);
-            _currentConfig.Size = data.size;
-            _timer.Reset();
+            
+            switch (data.selecetId)
+            {
+                case 0:
+                    _currentConfig.Size = new Vector2Int(4,8);
+                    break;
+                case 1:
+                    _currentConfig.Size = new Vector2Int(5,10);
+                    break;
+                case 2:
+                    _currentConfig.Size = new Vector2Int(6,12);
+                    break;
+                default:
+                    _currentConfig.Size = new Vector2Int(4,8);
+                    break;
+            }
             _misplacedPiecesCounter = 0;
             _boardUI.CleanBoard();
 
             _board.Initialize(_currentConfig);
             _boardUI.CreateBoard(_board);
-
-            _timer.Start();
-            //Started.Invoke();
         }
 
         /// <summary>
@@ -158,8 +169,7 @@ namespace DTT.MiniGame.Jigsaw
         {
             _isGameActive = false;
             _isPaused = false;
-
-            _timer.Stop();
+            
             _boardUI.SetBoardInteractable(false);
             JigsawResult result = new JigsawResult(TimeElapsed, _misplacedPiecesCounter);
             Finish?.Invoke(result);

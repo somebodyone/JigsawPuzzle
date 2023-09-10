@@ -40,6 +40,7 @@ namespace DLAM
                     compent.Select(true);
                     _listitems[_selectid].Select(false);
                     _selectid = compent.ID - 1;
+                    _data.selecetId = _selectid;
                 });
                 if (i == 0)
                 {

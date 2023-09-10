@@ -31,6 +31,7 @@ namespace DTT.MiniGame.Jigsaw.Demo
         /// </summary>
         private void Awake()
         {
+            
             _canvasGroup = GetComponent<CanvasGroup>();
             _button = GetComponent<Button>();
             SetVisible(false);
