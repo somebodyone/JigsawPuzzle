@@ -76,7 +76,7 @@ namespace DTT.MiniGame.Jigsaw.UI
         /// <summary>
         /// All the pieces that have been instantiated.
         /// </summary>
-        private JigsawPuzzlePieceUI[] _pieces = Array.Empty<JigsawPuzzlePieceUI>();
+        public JigsawPuzzlePieceUI[] _pieces = Array.Empty<JigsawPuzzlePieceUI>();
 
         /// <summary>
         /// Reference to the board of the game used for displaying the UI.
@@ -124,12 +124,16 @@ namespace DTT.MiniGame.Jigsaw.UI
 
 
                 piece.transform.localPosition = piece.GridToLocal(Vector2Int.zero);
-
-                
+                //显示乱序
+                int r = Random.Range(0, counter);
+                piece.transform.SetSiblingIndex(r);
                 piece.PickUp += HandlePickedUpPiece;
                 piece.Drop += HandleDroppedPiece;
                 ++counter;
             }
+            //最下面的拼图 设置为正确位置
+            _pieces[0].transform.SetAsFirstSibling();
+            HandleDroppedPiece(_pieces[0]);
         }
         
         
@@ -212,7 +216,7 @@ namespace DTT.MiniGame.Jigsaw.UI
         /// Handles the state for when a piece is dropped.
         /// </summary>
         /// <param name="piece">The piece that is being dropped.</param>
-        private void HandleDroppedPiece(JigsawPuzzlePieceUI piece)
+        public void HandleDroppedPiece(JigsawPuzzlePieceUI piece)
         {
             // Check if the piece is placed on the board.
             if (piece.rectTransform.GetWorldRect().Overlaps(_piecesContainer.GetWorldRect()))

@@ -18,7 +18,7 @@ namespace DTT.MiniGame.Jigsaw
         /// <summary>
         /// The position of the piece. If null it's not on the board.
         /// </summary>
-        public Vector2Int? Position { get; private set; }
+        public Vector2Int? Position { get; set; }
 
         /// <summary>
         /// Creates a new puzzle piece with all the connectors set to the edge.

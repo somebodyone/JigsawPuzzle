@@ -2,6 +2,7 @@ using System;
 using DLBASE;
 using DTT.MiniGame.Jigsaw;
 using DTT.MinigameBase.UI;
+using DTT.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,7 +32,7 @@ namespace DLAM
             });
             _prop.onClick.AddListener(() =>
             {
-                
+                JigsawManager.Instance.FlyToPos();
             });
             _back.onClick.AddListener(() =>
             {

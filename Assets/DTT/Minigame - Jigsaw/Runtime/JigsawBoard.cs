@@ -108,6 +108,35 @@ namespace DTT.MiniGame.Jigsaw
             return true;
         }
 
+        public JigsawPuzzlePiece GetOneEmptyPos()
+        {
+            JigsawPuzzlePiece jigsawPuzzlePiece = null;
+            Dictionary<Vector2Int, JigsawPuzzlePiece> current = CurrentLayout();
+            foreach (var key in _correctLayout.Keys)
+            {
+                if (!current.ContainsKey(key))//找到空位
+                {
+                    int num = 0;
+                    foreach (var value in current.Values)
+                    {
+                        if (_correctLayout[key] == value)//已上场 位置错误
+                        {
+                            num = 1;
+                        }
+                    }
+
+                    if (num ==0)
+                    {
+                        jigsawPuzzlePiece = _correctLayout[key];
+                        jigsawPuzzlePiece.Position = key;
+                        break;
+                    }
+                }
+            }
+            
+            return jigsawPuzzlePiece;
+        }
+
         internal bool VerifyOnePiece(JigsawPuzzlePiece piece)
         {
             if (piece.Position == null) return false;

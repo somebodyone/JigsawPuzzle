@@ -5,6 +5,7 @@ using DLAM;
 using DTT.MiniGame.Jigsaw.UI;
 using DTT.MinigameBase;
 using DTT.MinigameBase.UI;
+using DTT.Tweening;
 using UnityEngine;
 
 namespace DTT.MiniGame.Jigsaw
@@ -148,6 +149,40 @@ namespace DTT.MiniGame.Jigsaw
             _boardUI.CreateBoard(_board);
         }
 
+
+        public void FlyToPos()
+        {
+            JigsawPuzzlePiece jig = _board.GetOneEmptyPos();
+            if (jig == null)
+            {
+                return;
+            }
+
+            JigsawPuzzlePieceUI pieceUI = null;
+            foreach (var piece in _boardUI._pieces)
+            {
+                if (piece.Piece == jig)
+                {
+                    pieceUI = piece;
+                }
+            }
+
+            if (pieceUI == null)
+            {
+                return;
+            }
+            var pos = pieceUI.rectTransform.localPosition;
+            var endPos = pieceUI.GridToLocal(jig.Position.Value);
+            DTTween.TwoValue(pos.x, pos.y,endPos.x,endPos.y, 0.6f, Easing.EASE_OUT_ELASTIC, (val1,val2) =>
+            {
+                pieceUI.rectTransform.localPosition = new Vector3(val1,val2,0); 
+            }, () =>
+            {
+                _boardUI.HandleDroppedPiece(pieceUI);
+                CheckFinish(pieceUI);
+            });
+        }
+        
         /// <summary>
         /// Forces the game to finish.
         /// </summary>
