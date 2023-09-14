@@ -15,7 +15,7 @@ namespace DLBASE
         
         public class PlayerData
         {
-            public long timer;
+            public long day = -1;
         }
 
         public class Lisioner : DLLisioner
@@ -56,6 +56,18 @@ namespace DLBASE
             go.name = "DLPlayer";
             go.AddComponent<DLBase>();
             _base = go.GetComponent<DLBase>();
+            OnNewDay();
+        }
+
+        private static void OnNewDay()
+        {
+            int todayMidnight = DateTime.Now.Day;
+            if (_data.day != todayMidnight)
+            {
+                lisioner.Emit(EventType.OnNewDay);
+                _data.day = todayMidnight;
+            }
+            _opition.SetDirty(true);
         }
         
     }

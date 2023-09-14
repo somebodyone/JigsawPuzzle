@@ -25,7 +25,6 @@ namespace DLAM
         {
             _back = contentPlane.GetChild("back").asButton;
             GameManager.Instance.GameStart();
-            _data.sprite = GameUtlis.GetSpriteByFGUI("Main", _data.photoname + _data.id);
             JigsawManager.Instance.StartGame(_data);
         }
 

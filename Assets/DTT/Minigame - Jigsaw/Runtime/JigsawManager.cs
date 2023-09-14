@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Diagnostics;
 using DLAM;
+using DLBASE;
 using DTT.MiniGame.Jigsaw.UI;
 using DTT.MinigameBase;
 using DTT.MinigameBase.UI;
@@ -124,9 +125,7 @@ namespace DTT.MiniGame.Jigsaw
             _isGameActive = true;
             _isPaused = false;
             _currentConfig = new JigsawConfig();
-            Sprite sprite = Resources.Load<Sprite>("animal0");
-            _currentConfig.Image = sprite;
-            _currentConfig.Image = data.sprite;
+            _currentConfig.Image = GameUtlis.GetSpriteByFGUI("Main", data.photoname + data.id);
             switch (data.selecetId)
             {
                 case 0:

@@ -27,11 +27,12 @@ namespace DLAM
         public Vector2Int size;
         public int[] reward;
         public int lockgold;//解锁所需金币
-        public int starttime;//开始时间
+        public int month;//开始时间
         public int time;//持续时间
         public int dayily;//日期
+        public int year;//日期
         public int selecetId;
-        public Sprite sprite;
+        public bool daying = false;
     }
     
     public class GameData
