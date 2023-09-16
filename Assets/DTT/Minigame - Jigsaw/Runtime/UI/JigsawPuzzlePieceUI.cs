@@ -42,6 +42,8 @@ namespace DTT.MiniGame.Jigsaw.UI
         /// </summary>
         private Vector2 _lastPos;
 
+        public bool isInBoard;
+
         /// <summary>
         /// Gets necessary components and sets initial values.
         /// </summary>

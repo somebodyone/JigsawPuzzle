@@ -85,24 +85,30 @@ namespace DTT.MiniGame.Jigsaw.UI
         /// </summary>
         private Vector2 _previousCanvasSize;
 
+        public Vector2Int ShowSize;
         /// <summary>
         /// Creates the board based on the board.
         /// </summary>
         internal void CreateBoard(JigsawBoard board)
         {
             _board = board;
+            ShowSize = new Vector2Int(5,10);
             var layout = board.CorrectLayout;
             _pieces = new JigsawPuzzlePieceUI[board.CorrectLayout.Count];
-
-            _piecesContainer.GetComponent<Image>().sprite = board.Config.Image;
+            
+            //_piecesContainer.offsetMax = Vector2.zero;
+            //_piecesContainer.offsetMin = Vector2.zero;
+            //_piecesContainer.GetComponent<Image>().sprite = board.Config.Image;
             // Define counter for accessing UI elements index.
+            CalContentSize();
+                
             int counter = 0;
             foreach (var kvp in layout)
             {
                 // Create new piece from prefab.
                 JigsawPuzzlePieceUI piece = Instantiate(_prefabPiece, _offBoardPiecesContainer);//_piecesContainer);
                 _pieces[counter] = piece;
-                piece.RectTransform.sizeDelta = _piecesContainer.rect.size / board.Config.Size;
+                piece.RectTransform.sizeDelta = _piecesContainer.rect.size / ShowSize;//board.Config.Size;
                 piece.ApplyData(kvp.Value, board.Config.Image, kvp.Key, 1.0f / board.Config.Size.x, 1.0f / board.Config.Size.y);
                 piece.MoveOffBoard();
                 piece.raycastTarget = true;
@@ -191,6 +197,7 @@ namespace DTT.MiniGame.Jigsaw.UI
         /// <param name="piece">The piece that's been picked up.</param>
         private void HandlePickedUpPiece(JigsawPuzzlePieceUI piece)
         {
+            piece.RectTransform.sizeDelta = _piecesContainer.rect.size / _board.Config.Size;
             list.gameObject.SetActive(false);
             //判断拼图是否在正确的位置 无法移动正确位置的拼图
             if (JigsawManager.Instance.CheckOnePieceCurrent(piece)) return;
@@ -205,7 +212,6 @@ namespace DTT.MiniGame.Jigsaw.UI
         /// <param name="piece">The piece that is being dropped.</param>
         public void HandleDroppedPiece(JigsawPuzzlePieceUI piece)
         {
-            list.gameObject.SetActive(true);
             // Check if the piece is placed on the board.
             if (piece.rectTransform.GetWorldRect().Overlaps(_piecesContainer.GetWorldRect()))
             {
@@ -217,17 +223,23 @@ namespace DTT.MiniGame.Jigsaw.UI
 
                 if (!layout.ContainsKey(pos) && !_board.GridPositionIsOutOfBounds(pos) && _board.CorrectLayout.ContainsKey(pos))
                 {
+                    piece.isInBoard = true;
                     PlacePieceOnBoard(piece, pos);
+                    CalContentSize();
+                    list.gameObject.SetActive(true);
                     return;
                 }
                 else
                 {
-                    // If it overlaps with another piece we place it off the board but keep the position.
-                    //piece.rectTransform.SetParent(_offBoardPiecesContainer);
+                    if (!_board.CorrectLayout.ContainsKey(pos))
+                    {
+                        piece.isInBoard = false;  
+                    }
                 }
             }
 
             PlacePieceOutsideOfBoard(piece);
+            list.gameObject.SetActive(true);
         }
 
         /// <summary>
@@ -258,18 +270,30 @@ namespace DTT.MiniGame.Jigsaw.UI
         /// <param name="piece">The piece to place.</param>
         private void PlacePieceOutsideOfBoard(JigsawPuzzlePieceUI piece)
         {
-            //piece.rectTransform.SetParent(_offBoardPiecesContainer);
-
-            // Check if the piece is placed in an area off the board.
-            //if (_offBoardAreas.Any(t => t.GetWorldRect().Contains(piece.rectTransform.position)))
-             //   return;
-             if (piece.rectTransform.parent == _draggingPieceContainer)
-             {
+            if (piece.rectTransform.parent == _draggingPieceContainer && !piece.isInBoard)
+            {
+                 piece.RectTransform.sizeDelta = _piecesContainer.rect.size / ShowSize;
                  piece.rectTransform.SetParent(_offBoardPiecesContainer);
                  piece.rectTransform.SetAsFirstSibling();
-             }
-             piece.SnapBack();
+                 CalContentSize();
+            }
+            piece.SnapBack();
         }
 
+        public void SetPieceParentAndSize(JigsawPuzzlePieceUI piece)
+        {
+            piece.rectTransform.SetParent(_piecesContainer);
+            piece.RectTransform.sizeDelta = _piecesContainer.rect.size / _board.Config.Size;
+            
+        }
+
+        public void CalContentSize()
+        {
+            var size = _piecesContainer.rect.size / ShowSize;
+            int cur = _board.CurrentLayout().Count;
+            int all = _board.CorrectLayout.Count;
+            float x = (all - cur) * (size.x + 100);
+            _offBoardPiecesContainer.sizeDelta = new Vector2(x,_offBoardPiecesContainer.sizeDelta.y);
+        }
     }
 }

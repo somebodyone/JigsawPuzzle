@@ -170,8 +170,9 @@ namespace DTT.MiniGame.Jigsaw
             {
                 return;
             }
-            pieceUI.RectTransform.SetParent(_boardUI._piecesContainer);
-            var pos = pieceUI.rectTransform.localPosition;
+            _boardUI.SetPieceParentAndSize(pieceUI);
+            _boardUI.CalContentSize();
+            var pos = pieceUI.rectTransform.localPosition; 
             var endPos = pieceUI.GridToLocal(jig.Position.Value);
             DTTween.TwoValue(pos.x, pos.y,endPos.x,endPos.y, 0.6f, Easing.EASE_OUT_ELASTIC, (val1,val2) =>
             {
