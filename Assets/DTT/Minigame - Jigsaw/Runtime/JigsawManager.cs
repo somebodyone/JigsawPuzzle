@@ -132,10 +132,10 @@ namespace DTT.MiniGame.Jigsaw
                     _currentConfig.Size = new Vector2Int(4,8);
                     break;
                 case 1:
-                    _currentConfig.Size = new Vector2Int(5,10);
+                    _currentConfig.Size = new Vector2Int(6,12);
                     break;
                 case 2:
-                    _currentConfig.Size = new Vector2Int(6,12);
+                    _currentConfig.Size = new Vector2Int(8,16);
                     break;
                 default:
                     _currentConfig.Size = new Vector2Int(4,8);
@@ -170,6 +170,7 @@ namespace DTT.MiniGame.Jigsaw
             {
                 return;
             }
+            pieceUI.RectTransform.SetParent(_boardUI._piecesContainer);
             var pos = pieceUI.rectTransform.localPosition;
             var endPos = pieceUI.GridToLocal(jig.Position.Value);
             DTTween.TwoValue(pos.x, pos.y,endPos.x,endPos.y, 0.6f, Easing.EASE_OUT_ELASTIC, (val1,val2) =>

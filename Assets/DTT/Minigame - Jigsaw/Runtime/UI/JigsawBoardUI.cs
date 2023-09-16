@@ -41,7 +41,7 @@ namespace DTT.MiniGame.Jigsaw.UI
         /// </summary>
         [SerializeField]
         [Tooltip("The container parent for all the pieces that are on the board.")]
-        private RectTransform _piecesContainer;
+        public RectTransform _piecesContainer;
 
         /// <summary>
         /// The container parent for the piece that currently is being dragged.
@@ -54,24 +54,10 @@ namespace DTT.MiniGame.Jigsaw.UI
         /// The container parent for the pieces that are currently off the board.
         /// </summary>
         [SerializeField]
-        [Tooltip("The container parent for the pieces that are currently off the board.")]
-        private RectTransform _offBoardPiecesContainer;
+        public RectTransform _offBoardPiecesContainer;
 
-        /// <summary>
-        /// The rect transform that are used to signify the areas that the pieces can be placed in when not on the board.
-        /// Anything outside of these areas will be returned here.
-        /// </summary>
         [SerializeField]
-        [Tooltip("The rect transform that are used to signify the areas that the pieces can be placed in when not on the board." +
-                 "Anything outside of these areas will be returned here.")]
-        private RectTransform[] _offBoardAreas;
-
-        /// <summary>
-        /// The different spawn zones for where the pieces will initially begin in.
-        /// </summary>
-        [SerializeField]
-        [Tooltip("The different spawn zones for where the pieces will initially begin in.")]
-        private RectTransform[] _spawnZones;
+        private RectTransform list;
 
         /// <summary>
         /// All the pieces that have been instantiated.
@@ -114,7 +100,7 @@ namespace DTT.MiniGame.Jigsaw.UI
             foreach (var kvp in layout)
             {
                 // Create new piece from prefab.
-                JigsawPuzzlePieceUI piece = Instantiate(_prefabPiece, _piecesContainer);
+                JigsawPuzzlePieceUI piece = Instantiate(_prefabPiece, _offBoardPiecesContainer);//_piecesContainer);
                 _pieces[counter] = piece;
                 piece.RectTransform.sizeDelta = _piecesContainer.rect.size / board.Config.Size;
                 piece.ApplyData(kvp.Value, board.Config.Image, kvp.Key, 1.0f / board.Config.Size.x, 1.0f / board.Config.Size.y);
@@ -132,8 +118,8 @@ namespace DTT.MiniGame.Jigsaw.UI
                 ++counter;
             }
             //最下面的拼图 设置为正确位置
-            _pieces[0].transform.SetAsFirstSibling();
-            HandleDroppedPiece(_pieces[0]);
+            //_pieces[0].transform.SetAsFirstSibling();
+            //HandleDroppedPiece(_pieces[0]);
         }
         
         
@@ -205,6 +191,7 @@ namespace DTT.MiniGame.Jigsaw.UI
         /// <param name="piece">The piece that's been picked up.</param>
         private void HandlePickedUpPiece(JigsawPuzzlePieceUI piece)
         {
+            list.gameObject.SetActive(false);
             //判断拼图是否在正确的位置 无法移动正确位置的拼图
             if (JigsawManager.Instance.CheckOnePieceCurrent(piece)) return;
 
@@ -218,6 +205,7 @@ namespace DTT.MiniGame.Jigsaw.UI
         /// <param name="piece">The piece that is being dropped.</param>
         public void HandleDroppedPiece(JigsawPuzzlePieceUI piece)
         {
+            list.gameObject.SetActive(true);
             // Check if the piece is placed on the board.
             if (piece.rectTransform.GetWorldRect().Overlaps(_piecesContainer.GetWorldRect()))
             {
@@ -275,23 +263,13 @@ namespace DTT.MiniGame.Jigsaw.UI
             // Check if the piece is placed in an area off the board.
             //if (_offBoardAreas.Any(t => t.GetWorldRect().Contains(piece.rectTransform.position)))
              //   return;
-
-            piece.SnapBack();
+             if (piece.rectTransform.parent == _draggingPieceContainer)
+             {
+                 piece.rectTransform.SetParent(_offBoardPiecesContainer);
+                 piece.rectTransform.SetAsFirstSibling();
+             }
+             piece.SnapBack();
         }
 
-        /// <summary>
-        /// Retrieves a random spawn position in the spawn zones.
-        /// </summary>
-        /// <param name="size">The size of the piece.</param>
-        /// <returns>A random location.</returns>
-        private Vector3 GetRandomSpawnPosition(Vector2 size)
-        {
-            // Retrieve random spawn zone.
-            Rect zone = _spawnZones[Random.Range(0, _spawnZones.Length)].GetWorldRect();
-            // Determine the half size of the piece.
-            Vector2 halfSize = size / 2;
-            // Return a random position within the spawn zone rectangle while accounting for the size of the piece.
-            return new Vector3(Random.Range(zone.x + halfSize.x, zone.xMax - halfSize.x), Random.Range(zone.y + halfSize.y, zone.yMax - halfSize.y), 0);
-        }
     }
 }
