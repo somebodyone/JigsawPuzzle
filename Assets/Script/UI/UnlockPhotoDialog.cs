@@ -42,8 +42,9 @@ namespace DLAM
             {
                 if (_gold < _data.lockgold)
                 {
-                    Debug.Log("金钱不足");
+                    TipsManager.ShowTips("Not Enough Gold Coins");
                 }
+                GamePresenter.Instance.UnLockPhoto(_data);
             });
             _adbtn.onClick.Add(() =>
             {

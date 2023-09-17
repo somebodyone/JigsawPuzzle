@@ -10,7 +10,7 @@ namespace DLAM
         
         public void InitManager()
         {
-               
+            
         }
 
         public static void ShowTips(string url)

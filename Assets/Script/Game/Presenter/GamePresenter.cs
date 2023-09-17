@@ -1,22 +1,11 @@
+using System;
 using System.Collections.Generic;
 using DLBASE;
-using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace DLAM
 {
-    public enum PhotoType
-    {
-        Mystery,
-        Nature,
-        Landmark,
-        Animal,
-        Flowers,
-        Pet,
-        Inkpainting,
-        Cartoon,
-        Gril
-    }
-    
+    [Serializable]
     public class PhotoData
     {
         public bool islock = true;
@@ -24,15 +13,13 @@ namespace DLAM
         public int type;
         public int id;
         public string photoname;
-        public Vector2Int size;
         public int[] reward;
         public int lockgold;//解锁所需金币
         public int month;//开始时间
-        public int time;//持续时间
         public int dayily;//日期
-        public int year;//日期
         public int selecetId;
         public bool daying = false;
+        public int[] times = { -1, -1, -1 };
     }
     
     public class GameData
@@ -43,13 +30,23 @@ namespace DLAM
     
     public class GamePresenter : IPresenter<GamePresenter>
     {
+        public enum EventType
+        {
+            UpdatePhoto
+        }
+        public class Lisioner : DLLisioner
+        {
+            public void UpdatePhoto(object key, Action callback)
+            {
+                Add(key, EventType.UpdatePhoto, callback);
+            }
+        }
         private DLOpition<GameData> _opition;
-        private GameData _data;
-        
+        private GameData _data=>_opition.data;
+        public Lisioner lisioner = new Lisioner();
         public override void OnInit()
         {
             _opition = DLDataManager.GetOpition<GameData>();
-            _data = _opition.data;
             _data.recommenddata = new PhotoData();
             _data.datas = new List<PhotoData>();
             for (int i = 0; i < 16; i++)
@@ -62,7 +59,6 @@ namespace DLAM
                     data.islock = false;
                 }
                 data.photoname = "gril";
-                data.size = new Vector2Int(4, 6);
                 data.reward = new[] { 100, 200, 300 };
                 _data.datas.Add(data);
             }
@@ -76,7 +72,6 @@ namespace DLAM
                     data.islock = false;
                 }
                 data.photoname = "animal";
-                data.size = new Vector2Int(4, 6);
                 data.reward = new[] { 100, 200, 300 };
                 _data.datas.Add(data);
             }
@@ -90,7 +85,6 @@ namespace DLAM
                     data.islock = false;
                 }
                 data.photoname = "cartoon";
-                data.size = new Vector2Int(4, 6);
                 data.reward = new[] { 100, 200, 300 };
                 _data.datas.Add(data);
             }
@@ -104,7 +98,6 @@ namespace DLAM
                     data.islock = false;
                 }
                 data.photoname = "flowers";
-                data.size = new Vector2Int(4, 6);
                 data.reward = new[] { 100, 200, 300 };
                 _data.datas.Add(data);
             }
@@ -118,7 +111,6 @@ namespace DLAM
                     data.islock = false;
                 }
                 data.photoname = "landmark";
-                data.size = new Vector2Int(4, 6);
                 data.reward = new[] { 100, 200, 300 };
                 _data.datas.Add(data);
             }
@@ -132,7 +124,6 @@ namespace DLAM
                     data.islock = false;
                 }
                 data.photoname = "mystery";
-                data.size = new Vector2Int(4, 6);
                 data.reward = new[] { 100, 200, 300 };
                 _data.datas.Add(data);
             }
@@ -146,7 +137,6 @@ namespace DLAM
                     data.islock = false;
                 }
                 data.photoname = "nature";
-                data.size = new Vector2Int(4, 6);
                 data.reward = new[] { 100, 200, 300 };
                 _data.datas.Add(data);
             }
@@ -160,7 +150,6 @@ namespace DLAM
                     data.islock = false;
                 }
                 data.photoname = "pet";
-                data.size = new Vector2Int(4, 6);
                 data.reward = new[] { 100, 200, 300 };
                 _data.datas.Add(data);
             }
@@ -199,6 +188,7 @@ namespace DLAM
         {
             data.collect =!data.collect;
             _opition.SetDirty(true);
+            lisioner.Emit(EventType.UpdatePhoto);
         }
 
         public void UnLockPhoto(PhotoData data)
@@ -211,6 +201,7 @@ namespace DLAM
                 }
             }
             _opition.SetDirty(true);
+            lisioner.Emit(EventType.UpdatePhoto);
         }
 
         public GameData GameData => _data;

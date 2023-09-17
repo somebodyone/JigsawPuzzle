@@ -13,7 +13,6 @@ namespace DLAM
         public Button _back;
         public Button _prop;
         public Button _eye;
-        public Image _toolBg;
         public Button test;
         public static GameUIManager Instance;
         [SerializeField]
@@ -23,12 +22,10 @@ namespace DLAM
         public void Start()
         {
             Instance = this;
-            _toolBg.sprite = JigsawManager.Instance._currentConfig.Image; 
+
             _eye.onClick.AddListener(() =>
             {
-                isShowBg = isShowBg ? false : true;
-                
-                _toolBg.gameObject.SetActive(isShowBg);
+                ToolBgManager.Ins.Show();
             });
             _prop.onClick.AddListener(() =>
             {

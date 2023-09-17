@@ -10,6 +10,7 @@ namespace DLAM
         private GButton _enter;
         private PhotoData _data;
         private GLabel _icon;
+        private GTextField _diffcutlty;
         private GList _list;
         private List<DiffctyCom> _listitems = new List<DiffctyCom>();
         private int _selectid = 0;
@@ -30,6 +31,7 @@ namespace DLAM
             _list = contentPlane.GetChild("list").asList;
             _icon = contentPlane.GetChild("title").asLabel;
             _close = contentPlane.GetChild("back").asButton;
+            _diffcutlty = contentPlane.GetChild("diffcutlty").asTextField;
             _icon.icon = "ui://Main/" + _data.photoname + _data.id;
             for (int i = 0; i < 3; i++)
             {
@@ -41,6 +43,7 @@ namespace DLAM
                     _listitems[_selectid].Select(false);
                     _selectid = compent.ID - 1;
                     _data.selecetId = _selectid;
+                    UpdateCompent();
                 });
                 if (i == 0)
                 {
@@ -61,6 +64,19 @@ namespace DLAM
                 DLDialogManager.Instance.OpenDialog<GameDialog>(_data);
                 DLDialogManager.Instance.CloseDialog<SelectDifficultyDialog>();
             });
+            UpdateCompent();
+        }
+
+        private void UpdateCompent()
+        {
+            if (_data.times[_selectid] == -1)
+            {
+                _diffcutlty.text = "Not Started";
+            }
+            else
+            {
+                _diffcutlty.text = "Minimum time" + _data.times[_selectid] + "s";
+            }
         }
     }
 }

@@ -3,6 +3,7 @@ using DLBASE;
 
 namespace DLAM
 {
+    [Serializable]
     public class AdData
     {
     }

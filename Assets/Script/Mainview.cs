@@ -29,6 +29,7 @@ namespace DLAM
         private GButton _category;
         private GButton _mypuzzle;
         private GButton _setbtn;
+        private GButton _gold;
 
         private GButton _personal;
         
@@ -41,12 +42,6 @@ namespace DLAM
             _bigCard = UIPackage.CreateObjectFromURL(BigCard.URL) as BigCard;
             _bigCard.Init(_data.recommenddata);
             _controller = GetController("type");
-            for (int i = 0; i < _data.datas.Count; i++)
-            {
-                Card card = UIPackage.CreateObjectFromURL(Card.URL) as Card;
-                card.Init(_data.datas[i]);
-                _list.AddChild(card);
-            }
             _cateGorayPage = GetChild("cateGorayPage") as CateGorayPage;
             _cateGorayPage.OnInit();
             _dailyPuzzlePage = GetChild("dailyPuzzle") as DailyPuzzlePage;
@@ -60,6 +55,7 @@ namespace DLAM
             _mypuzzle = _down.GetChild("mypuzzle").asButton;
             _top = GetChild("top").asCom;
             _personal = _top.GetChild("personal").asButton;
+            _gold = _top.GetChild("reward").asButton;
             _setbtn = _top.GetChild("set").asButton;
             _homepage.onClick.Add(() => { ChangePage(PageEnum.HomePage);});
             _setbtn.onClick.Add(() =>
@@ -69,12 +65,28 @@ namespace DLAM
             _dailypuzzle.onClick.Add(() => { ChangePage(PageEnum.DailyPuzzle);});
             _category.onClick.Add(() => { ChangePage(PageEnum.Category);});
             _mypuzzle.onClick.Add(() => { ChangePage(PageEnum.Mypuzzle);});
+            RewardPresenter.Instance.lisioner.UpdateGold(this, () =>
+            {
+                _gold.title = _rewardData.gold.ToString();
+            });
+            GamePresenter.Instance.lisioner.UpdatePhoto(this, UpdateCompent);
             _personal.onClick.Add(() =>
             {
                 DLDialogManager.Instance.OpenDialog<PersonalDialog>();
             });
+            UpdateCompent();
         }
 
+        private void UpdateCompent()
+        {
+            _list.RemoveChildrenToPool();
+            for (int i = 0; i < _data.datas.Count; i++)
+            {
+                Card card = UIPackage.CreateObjectFromURL(Card.URL) as Card;
+                card.Init(_data.datas[i]);
+                _list.AddChild(card);
+            }
+        }
         private void ChangePage(PageEnum type)
         {
             _homepage.GetController("select").SetSelectedPage("on");
@@ -98,6 +110,7 @@ namespace DLAM
                 case PageEnum.Mypuzzle:
                     _controller.SetSelectedPage("Mypuzzle");
                     _mypuzzle.GetController("select").SetSelectedPage("off");
+                    _myPuzzlePage.UpdateCompent();
                     break;
             }
         }

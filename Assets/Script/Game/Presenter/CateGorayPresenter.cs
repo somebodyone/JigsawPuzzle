@@ -1,14 +1,17 @@
+using System;
 using System.Collections.Generic;
 using DLBASE;
 
 namespace DLAM
 {
+    [Serializable]
     public class CateGorayItemData
     {
         public int type;
         public string namekey;
     }
 
+    [Serializable]
     public class CateGorayData
     {
         public List<CateGorayItemData> datas;
@@ -17,12 +20,11 @@ namespace DLAM
     public class CateGorayPresenter : IPresenter<CateGorayPresenter>
     {
         private DLOpition<CateGorayData> _opition;
-        private CateGorayData _data;
+        private CateGorayData _data=>_opition.data;
         private List<string> CateGorayConfig => CoreDataPresenter.Instance.GameCoreConfig.CateGorayConfig;
         public override void OnInit()
         {
             _opition = DLDataManager.GetOpition<CateGorayData>();
-            _data = _opition.data;
             _data.datas = new List<CateGorayItemData>();
             for (int i = 0; i < CateGorayConfig.Count; i++)
             {

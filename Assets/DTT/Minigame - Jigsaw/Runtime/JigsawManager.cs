@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Diagnostics;
+using DG.Tweening;
 using DLAM;
 using DLBASE;
 using DTT.MiniGame.Jigsaw.UI;
@@ -110,6 +111,8 @@ namespace DTT.MiniGame.Jigsaw
 
         public static JigsawManager Instance;
 
+        private int _time = 0;
+
         public void Awake()
         {
             Instance = this;
@@ -121,6 +124,10 @@ namespace DTT.MiniGame.Jigsaw
         /// <param name="config">The config the start game with.</param>
         public void StartGame(PhotoData data)
         {
+            DLPlayer.lisioner.SecondTrick(this, () =>
+            {
+                _time++;
+            });
             curData = data;
             _isGameActive = true;
             _isPaused = false;
@@ -174,14 +181,21 @@ namespace DTT.MiniGame.Jigsaw
             _boardUI.CalContentSize();
             var pos = pieceUI.rectTransform.localPosition; 
             var endPos = pieceUI.GridToLocal(jig.Position.Value);
-            DTTween.TwoValue(pos.x, pos.y,endPos.x,endPos.y, 0.6f, Easing.EASE_OUT_ELASTIC, (val1,val2) =>
-            {
-                pieceUI.rectTransform.localPosition = new Vector3(val1,val2,0); 
-            }, () =>
+            pieceUI.transform.position = new Vector3(Screen.width / 2.0f, 0, 0);
+            Vector3 scale = pieceUI.transform.localScale;
+            pieceUI.transform.localScale =scale+Vector3.one*0.5f;
+            pieceUI.transform.DOScale(scale, 0.2f).SetEase(Ease.InExpo).OnComplete(() =>
             {
                 _boardUI.HandleDroppedPiece(pieceUI);
                 CheckFinish(pieceUI);
             });
+            // DTTween.TwoValue(pos.x, pos.y,endPos.x,endPos.y, 0.6f, Easing.EASE_OUT_ELASTIC, (val1,val2) =>
+            // {
+            //     pieceUI.rectTransform.localPosition = new Vector3(val1,val2,0); 
+            // }, () =>
+            // {
+            //   
+            // });
         }
         
         /// <summary>
@@ -193,7 +207,9 @@ namespace DTT.MiniGame.Jigsaw
             _isPaused = false;
             
             _boardUI.SetBoardInteractable(false);
+            DLPlayer.lisioner.Remove(this);
             JigsawResult result = new JigsawResult(TimeElapsed, _misplacedPiecesCounter);
+            RewardManager.Ins.Show(curData,_time);
             Finish?.Invoke(result);
             Finished?.Invoke();
         }

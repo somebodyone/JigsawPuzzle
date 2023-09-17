@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 
 namespace DLAM
 {
+    [Serializable]
     public class DailyPuzzleData
     {
         public List<PhotoData> datas;
@@ -14,12 +15,11 @@ namespace DLAM
     public class DailyPuzzlePresenter: IPresenter<DailyPuzzlePresenter>
     {
         private DLOpition<DailyPuzzleData> _opition;
-        private DailyPuzzleData _data;
+        private DailyPuzzleData _data=>_opition.data;
         
         public override void OnInit()
         {
             _opition = DLDataManager.GetOpition<DailyPuzzleData>();
-            _data = _opition.data;
             DLPlayer.lisioner.OnNewDay(this, () =>
             {
                 SetData();
@@ -44,12 +44,10 @@ namespace DLAM
                     itemdata.type = 1000;
                     itemdata.id = targetid;
                     itemdata.photoname = "dailypuzzle";
-                    itemdata.size = new Vector2Int(4, 6);
                     itemdata.reward = new[] { 1000, 2000, 3000 };
                     itemdata.daying = false;
                     itemdata.dayily = DateTime.Now.Day-i;
                     itemdata.month = DateTime.Now.Month;
-                    itemdata.year = DateTime.Now.Year;
                     _data.datas.Add(itemdata);
                 }
             }
@@ -68,12 +66,10 @@ namespace DLAM
             data.type = 1000;
             data.id = id;
             data.photoname = "dailypuzzle";
-            data.size = new Vector2Int(4, 6);
             data.reward = new[] { 1000, 2000, 3000 };
             data.daying = true;
             data.dayily = DateTime.Now.Day;
             data.month = DateTime.Now.Month;
-            data.year = DateTime.Now.Year;
             _data.datas.Add(data);
             _opition.SetDirty(true);
         }

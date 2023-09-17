@@ -11,6 +11,11 @@ namespace DLAM
         public void OnInit()
         {
             _list = GetChild("list").asList;
+        }
+
+        public void UpdateCompent()
+        {
+            _list.RemoveChildrenToPool();
             for (int i = 0; i < _data.datas.Count; i++)
             {
                 PhotoData data = _data.datas[i];

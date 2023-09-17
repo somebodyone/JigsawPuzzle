@@ -18,6 +18,7 @@ namespace DLAM
             GamePresenter.Instance.OnInit();
             RewardPresenter.Instance.OnInit();
             DailyPuzzlePresenter.Instance.OnInit();
+            MyPuzzlePresenter.Instance.OnInit();
             GameManager.Instance.InitManager();
             DLPlayer.CheckInit();
         }

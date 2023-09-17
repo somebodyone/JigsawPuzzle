@@ -5,6 +5,10 @@ namespace DLBASE
 {
     public class DLPlayer
     {
+        public class PlayerData
+        {
+            public long day = -1;
+        }
         public enum EventType
         {
             OnNewDay,
@@ -12,12 +16,6 @@ namespace DLBASE
             Update,
             SecondTrick
         }
-        
-        public class PlayerData
-        {
-            public long day = -1;
-        }
-
         public class Lisioner : DLLisioner
         {
             public void OnNewDay(object key, Action callback)
@@ -42,7 +40,7 @@ namespace DLBASE
         }
 
         private static DLOpition<PlayerData> _opition;
-        private static PlayerData _data;
+        private static PlayerData _data =>_opition.data;
         private static DLBase _base;
         public static Timer timer;
         public static Lisioner lisioner = new Lisioner();
@@ -50,7 +48,6 @@ namespace DLBASE
         public static void CheckInit()
         {
             _opition = DLDataManager.GetOpition<PlayerData>();
-            _data = _opition.data;
             GameObject go = new GameObject();
             timer = new Timer();
             go.name = "DLPlayer";
