@@ -8,7 +8,7 @@ namespace DLAM
         public List<PhotoData> datas;
     }
     
-    public class MyPuzzlePresenter : IPresenter<CoreDataPresenter>
+    public class MyPuzzlePresenter : IPresenter<MyPuzzlePresenter>
     {
         private DLOpition<MyPuzzleData> _opition;
         private MyPuzzleData _data;
@@ -21,6 +21,27 @@ namespace DLAM
             {
                 _data.datas = new List<PhotoData>();
             }
+        }
+
+        /// <summary>
+        /// 完成图片
+        /// </summary>
+        /// <param name="data"></param>
+        public void AchivePhoto(PhotoData data)
+        {
+            foreach (var item in _data.datas)
+            {
+                if (item == data)
+                {
+                    return;
+                }
+            }
+            _data.datas.Add(data);
+        }
+
+        public MyPuzzleData GetData()
+        {
+            return _data;
         }
     }
 }

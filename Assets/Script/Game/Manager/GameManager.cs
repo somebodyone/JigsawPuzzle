@@ -14,7 +14,6 @@ namespace DLAM
         {
             _perfab = Resources.Load<GameObject>("Game");
             UIObjectFactory.SetPackageItemExtension(MainView.URL, typeof(MainView));
-            UIObjectFactory.SetPackageItemExtension(MainView.URL, typeof(MainView));
             UIObjectFactory.SetPackageItemExtension(BigCard.URL, typeof(BigCard));
             UIObjectFactory.SetPackageItemExtension(Card.URL, typeof(Card));
             UIObjectFactory.SetPackageItemExtension(CateGorayPage.URL, typeof(CateGorayPage));
@@ -22,6 +21,8 @@ namespace DLAM
             UIObjectFactory.SetPackageItemExtension(DailyPuzzlePage.URL, typeof(DailyPuzzlePage));
             UIObjectFactory.SetPackageItemExtension(DailyPuzzleCompent.URL, typeof(DailyPuzzleCompent));
             UIObjectFactory.SetPackageItemExtension(DailyCompent.URL, typeof(DailyCompent));
+            UIObjectFactory.SetPackageItemExtension(MyPuzzlePage.URL, typeof(MyPuzzlePage));
+            UIObjectFactory.SetPackageItemExtension(MyPuzzleCard.URL, typeof(MyPuzzleCard));
         }
 
         public void GameStart()

@@ -20,6 +20,7 @@ namespace DLAM
         private Controller _controller;
         private CateGorayPage _cateGorayPage;
         private DailyPuzzlePage _dailyPuzzlePage;
+        private MyPuzzlePage _myPuzzlePage;
 
         private GComponent _top;
         private GComponent _down;
@@ -28,6 +29,9 @@ namespace DLAM
         private GButton _category;
         private GButton _mypuzzle;
         private GButton _setbtn;
+
+        private GButton _personal;
+        
         private GameData _data => GamePresenter.Instance.GameData;
         private RewardData _rewardData => RewardPresenter.Instance.GetData();
 
@@ -47,12 +51,15 @@ namespace DLAM
             _cateGorayPage.OnInit();
             _dailyPuzzlePage = GetChild("dailyPuzzle") as DailyPuzzlePage;
             _dailyPuzzlePage.Init();
+            _myPuzzlePage = GetChild("mypuzzle") as MyPuzzlePage;
+            _myPuzzlePage.OnInit();
             _down = GetChild("down").asCom;
             _homepage = _down.GetChild("homepage").asButton;
             _dailypuzzle = _down.GetChild("dailypuzzle").asButton;
             _category = _down.GetChild("category").asButton;
             _mypuzzle = _down.GetChild("mypuzzle").asButton;
             _top = GetChild("top").asCom;
+            _personal = _top.GetChild("personal").asButton;
             _setbtn = _top.GetChild("set").asButton;
             _homepage.onClick.Add(() => { ChangePage(PageEnum.HomePage);});
             _setbtn.onClick.Add(() =>
@@ -62,6 +69,10 @@ namespace DLAM
             _dailypuzzle.onClick.Add(() => { ChangePage(PageEnum.DailyPuzzle);});
             _category.onClick.Add(() => { ChangePage(PageEnum.Category);});
             _mypuzzle.onClick.Add(() => { ChangePage(PageEnum.Mypuzzle);});
+            _personal.onClick.Add(() =>
+            {
+                DLDialogManager.Instance.OpenDialog<PersonalDialog>();
+            });
         }
 
         private void ChangePage(PageEnum type)

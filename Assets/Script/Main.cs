@@ -27,7 +27,7 @@ namespace DLAM
             _main = UIPackage.CreateObject(MainUrl, "主页").asCom;
             _main.MakeFullScreen();
             _main.AddRelation(GRoot.inst, RelationType.Size);
-            GameObject go = GameObject.Instantiate(Resources.Load<GameObject>("Puzzle"));
+            GameObject go = Instantiate(Resources.Load<GameObject>("Puzzle"));
             SpriteRenderer spriteRenderer = go.GetComponent<SpriteRenderer>();
             spriteRenderer.sprite = GameUtlis.GetSpriteByFGUI("Main", "animal0");
             GRoot.inst.AddChild(_main);
