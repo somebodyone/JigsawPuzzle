@@ -33,5 +33,10 @@ namespace DLBASE
                 SetDirty(true);
             }
         }
+
+        public bool HasKey()
+        {
+            return PlayerPrefs.HasKey(_key + target.GetType());
+        }
     }
 }

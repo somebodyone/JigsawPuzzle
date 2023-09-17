@@ -20,7 +20,6 @@ namespace DLAM
         {
             _opition = DLDataManager.GetOpition<DailyPuzzleData>();
             _data = _opition.data;
-            _data.datas = new List<PhotoData>();
             DLPlayer.lisioner.OnNewDay(this, () =>
             {
                 SetData();
@@ -34,11 +33,35 @@ namespace DLAM
             {
                 list.Add(i);
             }
-            for (int i = 0; i < _data.datas.Count; i++)
+            if (_data.datas == null)
             {
-                _data.datas[i].daying = false;
-                _data.datas[i].dayily++;
+                _data.datas = new List<PhotoData>();
+                for (int i = 1; i < 3; i++)
+                {
+                    int targetid = Random.Range(0, list.Count);
+                    list.RemoveAt(targetid);
+                    PhotoData itemdata = new PhotoData();
+                    itemdata.type = 1000;
+                    itemdata.id = targetid;
+                    itemdata.photoname = "dailypuzzle";
+                    itemdata.size = new Vector2Int(4, 6);
+                    itemdata.reward = new[] { 1000, 2000, 3000 };
+                    itemdata.daying = false;
+                    itemdata.dayily = DateTime.Now.Day-i;
+                    itemdata.month = DateTime.Now.Month;
+                    itemdata.year = DateTime.Now.Year;
+                    _data.datas.Add(itemdata);
+                }
             }
+            else
+            {
+                for (int i = 0; i < _data.datas.Count; i++)
+                {
+                    _data.datas[i].daying = false;
+                    _data.datas[i].dayily++;
+                }
+            }
+            
             int id = Random.Range(0, list.Count);
             list.RemoveAt(id);
             PhotoData data = new PhotoData();

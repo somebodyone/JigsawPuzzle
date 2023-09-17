@@ -66,19 +66,27 @@ namespace DLAM
 
         private void ChangePage(PageEnum type)
         {
+            _homepage.GetController("select").SetSelectedPage("on");
+            _dailypuzzle.GetController("select").SetSelectedPage("on");
+            _category.GetController("select").SetSelectedPage("on");
+            _mypuzzle.GetController("select").SetSelectedPage("on");
             switch (type)
             {
                 case PageEnum.HomePage:
                     _controller.SetSelectedPage("HomePage");
+                    _homepage.GetController("select").SetSelectedPage("off");
                     break;
                 case PageEnum.DailyPuzzle:
                     _controller.SetSelectedPage("DailyPuzzle");
+                    _dailypuzzle.GetController("select").SetSelectedPage("off");
                     break;
                 case PageEnum.Category:
                     _controller.SetSelectedPage("Category");
+                    _category.GetController("select").SetSelectedPage("off");
                     break;
                 case PageEnum.Mypuzzle:
                     _controller.SetSelectedPage("Mypuzzle");
+                    _mypuzzle.GetController("select").SetSelectedPage("off");
                     break;
             }
         }
